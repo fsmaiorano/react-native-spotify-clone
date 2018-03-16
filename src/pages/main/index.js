@@ -7,4 +7,8 @@ const Main = () => (
   </View>
 );
 
+Main.navigationOptions = {
+  title: 'Sua Biblioteca',
+};
+
 export default Main;
