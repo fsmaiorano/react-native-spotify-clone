@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from './styles';
 
@@ -10,8 +11,13 @@ const Main = () => (
   </View>
 );
 
-Main.navigationOptions = {
+Main.navigationOptions = ({ navigation }) => ({
   title: 'Sua Biblioteca',
-};
+  headerRight: (
+    <TouchableOpacity style={styles.headerRight} onPress={() => navigation.navigate('Search')} >
+      <Icon name="search" size={24} color="#FFF" />
+    </TouchableOpacity>
+  ),
+});
 
 export default Main;
