@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StatusBar, TouchableOpacity, FlatList } from 'react-native';
+import { View, StatusBar, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import PropTypes from 'prop-types';
 import AlbumItem from './components/albumItem';
 
 import styles from './styles';
@@ -240,16 +240,24 @@ const albums = [
   },
 ];
 
-const Main = () => (
+const Main = ({ navigation }) => (
   <View style={styles.container}>
     <StatusBar barStyle="light-content" />
     <FlatList
       data={albums}
       keyEstractor={album => String(album.id)}
-      renderItem={({ item }) => <AlbumItem album={item} />}
+      renderItem={({ item }) => (
+        <AlbumItem onPress={() => navigation.navigate('Album', { album: item })} album={item} />
+      )}
     />
   </View>
 );
+
+Main.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
 
 Main.navigationOptions = ({ navigation }) => ({
   title: 'Sua Biblioteca',
