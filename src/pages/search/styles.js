@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     height: 42,
     color: colors.white,
   },
+  loading : {
+    marginTop: metrics.basePadding,
+  }
 });
 
 export default styles;
