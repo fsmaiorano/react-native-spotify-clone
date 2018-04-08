@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '',
+  baseURL: 'http://192.168.1.110:3000',
 });
 
 export default api;
+
+//We use json-server to simulate a backend with some informations.
+//Verify your actual IP and update the baseURL.
