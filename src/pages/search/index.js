@@ -8,19 +8,18 @@ import {
   View,
   TextInput,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 
 import SongItem from 'components/SongItem';
 import styles from './styles';
 
 class Search extends Component {
-
   static navigationOptions = {
     title: 'Buscar',
   }
 
-  static propTypes ={
+  static propTypes = {
     searchRequest: PropTypes.func.isRequired,
     search: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
@@ -30,7 +29,7 @@ class Search extends Component {
     }).isRequired,
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.searchRequest = debounce(this.props.searchRequest, 500);
   }
@@ -44,32 +43,32 @@ class Search extends Component {
     this.searchRequest(searchInput);
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <View style={styles.container}>
-      <View style={styles.form}>
-        <TextInput
-          style={styles.searchInput}
-          autoCorrect={false}
-          autoCapitalize="none"
-          placeholder="Buscar por músicas..."
-          placeholderTextColor="#666"
-          underlineColorAndroid="transparent"
-          value={this.state.searchInput}
-          onChangeText={this.search}
+        <View style={styles.form}>
+          <TextInput
+            style={styles.searchInput}
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Buscar por músicas..."
+            placeholderTextColor="#666"
+            underlineColorAndroid="transparent"
+            value={this.state.searchInput}
+            onChangeText={this.search}
+          />
+        </View>
+
+        {this.props.search.loading &&
+          <ActivityIndicator size="small" color="#999" style={styles.loading} />}
+
+        <FlatList
+          data={this.props.search.data}
+          keyExtractor={song => String(song.id)}
+          renderItem={({ item }) => <SongItem song={item} />}
         />
       </View>
-
-      { this.props.search.loading &&
-        <ActivityIndicator size='small' color='#999' style={styles.loading} /> }
-
-      <FlatList
-        data={this.props.search.data}
-        keyExtractor={song => String(song.id)}
-        renderItem={({ item }) => <SongItem song={item} />}
-      />
-    </View>
-    )
+    );
   }
 }
 
@@ -80,4 +79,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(SearchActions, dispatch);
 
-export default connect(mapStateToProps,mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
