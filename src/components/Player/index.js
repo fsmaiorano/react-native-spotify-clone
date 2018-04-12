@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as PlayerActions } from 'store/ducks/player';
@@ -12,7 +13,9 @@ const currentSong = {
   author: 'Linkin Park',
 };
 
-const Player = ({ player, play, pause }) => {
+const Player = ({
+ player, play, pause, next, previous
+}) => {
   if (player.currentSong.id === undefined) return null;
 
   const pressFunction = player.paused ? play : pause;
@@ -25,18 +28,31 @@ const Player = ({ player, play, pause }) => {
         <Text style={styles.author}>{player.currentSong.author}</Text>
       </View>
       <View style={styles.controls}>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={previous}>
           <Icon name="skip-previous" size={24} style={styles.controlIcons} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.play} onPress={pressFunction}>
           <Icon name={icon} size={36} style={styles.controlIcons} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={next}>
           <Icon name="skip-next" size={24} style={styles.controlIcons} />
         </TouchableOpacity>
       </View>
     </View>
   );
+};
+
+Player.propTypes = {
+  player: PropTypes.shape({
+    currentSong: PropTypes.shape({
+      title: PropTypes.string,
+      author: PropTypes.string,
+    }),
+  }).isRequired,
+  play: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  previous: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
