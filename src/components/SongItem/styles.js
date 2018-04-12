@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
 
+  active: {
+    color: colors.active,
+  },
+
   author: {
     fontSize: 14,
     color: colors.dark,
@@ -27,6 +31,10 @@ const styles = StyleSheet.create({
 
   play: {
     color: colors.regular,
+  },
+
+  loading: {
+    marginRight: 2,
   },
 
 });
