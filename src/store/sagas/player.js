@@ -12,6 +12,14 @@ export function* play() {
   }
 }
 
+export function* pause() {
+  try {
+    yield call(Sound.pause);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* setSong(action) {
   try {
     if (Sound.isLoaded()) yield call(Sound.release);

@@ -12,8 +12,12 @@ const currentSong = {
   author: 'Linkin Park',
 };
 
-const Player = ({ player }) => {
+const Player = ({ player, play, pause }) => {
   if (player.currentSong.id === undefined) return null;
+
+  const pressFunction = player.paused ? play : pause;
+  const icon = player.paused ? 'play-circle-filled' : 'pause-circle-filled';
+
   return (
     <View style={styles.container}>
       <View style={styles.currentSong}>
@@ -24,8 +28,8 @@ const Player = ({ player }) => {
         <TouchableOpacity onPress={() => { }}>
           <Icon name="skip-previous" size={24} style={styles.controlIcons} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.play} onPress={() => { }}>
-          <Icon name="play-circle-filled" size={36} style={styles.controlIcons} />
+        <TouchableOpacity style={styles.play} onPress={pressFunction}>
+          <Icon name={icon} size={36} style={styles.controlIcons} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => { }}>
           <Icon name="skip-next" size={24} style={styles.controlIcons} />
