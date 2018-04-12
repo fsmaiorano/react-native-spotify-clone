@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as PlayerActions } from 'store/ducks/player';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -9,27 +12,34 @@ const currentSong = {
   author: 'Linkin Park',
 };
 
-const Player = () => (
-  <View style={styles.container}>
-
-    <View style={styles.currentSong}>
-      <Text style={styles.title}>{currentSong.title}</Text>
-      <Text style={styles.author}>{currentSong.author}</Text>
+const Player = ({ player }) => {
+  if (player.currentSong.id === undefined) return null;
+  return (
+    <View style={styles.container}>
+      <View style={styles.currentSong}>
+        <Text style={styles.title}>{player.currentSong.title}</Text>
+        <Text style={styles.author}>{player.currentSong.author}</Text>
+      </View>
+      <View style={styles.controls}>
+        <TouchableOpacity onPress={() => { }}>
+          <Icon name="skip-previous" size={24} style={styles.controlIcons} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.play} onPress={() => { }}>
+          <Icon name="play-circle-filled" size={36} style={styles.controlIcons} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => { }}>
+          <Icon name="skip-next" size={24} style={styles.controlIcons} />
+        </TouchableOpacity>
+      </View>
     </View>
+  );
+};
 
-    <View style={styles.controls}>
-      <TouchableOpacity onPress={() => { }}>
-        <Icon name="skip-previous" size={24} style={styles.controlIcons} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.play} onPress={() => { }}>
-        <Icon name="play-circle-filled" size={36} style={styles.controlIcons} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => { }}>
-        <Icon name="skip-next" size={24} style={styles.controlIcons} />
-      </TouchableOpacity>
-    </View>
+const mapStateToProps = state => ({
+  player: state.player,
+});
 
-  </View>
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PlayerActions, dispatch);
 
-export default Player;
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
