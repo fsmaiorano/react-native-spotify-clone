@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import SongItem from 'components/SongItem';
+import SongList from 'components/SongList';
 import styles from './styles';
 
 class Search extends Component {
@@ -62,10 +62,8 @@ class Search extends Component {
         {this.props.search.loading &&
           <ActivityIndicator size="small" color="#999" style={styles.loading} />}
 
-        <FlatList
+        <SongList
           data={this.props.search.data}
-          keyExtractor={song => String(song.id)}
-          renderItem={({ item }) => <SongItem song={item} />}
         />
       </View>
     );

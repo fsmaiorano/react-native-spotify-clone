@@ -26,7 +26,7 @@ export function* setSong(action) {
 
     yield call(Sound.init, action.payload.song.file);
     yield call(play);
-    yield put(PlayerActions.setSongSuccess(action.payload.song));
+    yield put(PlayerActions.setSongSuccess(action.payload.song, action.payload.list));
   } catch (error) {
     yield put(PlayerActions.setSongFailure('Erro ao iniciar a música'));
   }
